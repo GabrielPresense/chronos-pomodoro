@@ -5,7 +5,7 @@ import {
     SunIcon,
 } from 'lucide-react';
 import styles from './styles.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 type AvaliableThemes = 'dark' | 'light'
 
@@ -16,16 +16,29 @@ export function Menu() {
         event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     ) {
         event.preventDefault();
-        
-        console.log('Clicado', Date.now());
 
         setTheme(prevTheme => {
             const nextTheme = prevTheme === 'dark' ? 'light' : 'dark';
             return nextTheme;
         });
-
-        // document.documentElement.setAttribute('data-theme', theme);
     }
+
+    // useEffect(() => {
+    //     console.log('useRfeccrt com array deps vaxio', Date.now());
+    // }); // Executando todas vez que o componente renderiza na tela
+
+    // seEffect(() => {
+    //    console.log('', Date.now());
+    // }, []);
+
+     useEffect(() => {
+        console.log('Theme mudou', theme, Date.now());
+        document.documentElement.setAttribute('data-theme', theme);
+
+        return () => {
+            console.log('Olha, este componente será atualizado');
+        };
+    }, [theme]);
 
     return (
         <nav className={styles.menu}>
