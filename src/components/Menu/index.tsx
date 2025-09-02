@@ -10,7 +10,10 @@ import { useState, useEffect } from 'react';
 type AvaliableThemes = 'dark' | 'light'
 
 export function Menu() {
-    const [theme, setTheme] = useState<AvaliableThemes>('dark');
+    const [theme, setTheme] = useState<AvaliableThemes>(() => {
+        const storageTheme = localStorage.getItem('theme') as AvaliableThemes || 'dark';
+        return storageTheme;
+    });
 
     function handleThemeChange(
         event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
@@ -22,14 +25,6 @@ export function Menu() {
             return nextTheme;
         });
     }
-
-    // useEffect(() => {
-    //     console.log('useRfeccrt com array deps vaxio', Date.now());
-    // }); // Executando todas vez que o componente renderiza na tela
-
-    // seEffect(() => {
-    //    console.log('', Date.now());
-    // }, []);
 
      useEffect(() => {
         console.log('Theme mudou', theme, Date.now());
